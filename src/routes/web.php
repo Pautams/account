@@ -87,6 +87,8 @@ Route::middleware(EnsureTokenIsValid::class)->group(function () {
       Route::post($route.'delete', $controller."delete");
       Route::get($route.'test', $controller."test");
       Route::post($route.'retrieve_by_filter', $controller."retrieveAll");
+      Route::post($route.'retrieve_sub_accounts', $controller."retrieveSubAccount");
+      Route::post($route.'retrieve_members', $controller."retrieveMembers");
 
       // Account Set Types
       $route = env('PACKAGE_ROUTE', '').'/account_set_types/';

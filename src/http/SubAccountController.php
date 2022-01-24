@@ -145,4 +145,29 @@ class SubAccountController extends APIController
       return $this->response();
     }
 
+    public function retrieveSubAccount ($accountId){
+      $subAcc = SubAccount::where('account_id','=',$accountId)->get();
+      if(sizeof($subAcc) > 0){
+        for($i=0; $i <= sizeof($subAcc) - 1; $i++){
+          $item = $subAcc[$i];
+          $subAcc[$i]['details'] = json_decode($item['details']);
+          $subAcc[$i]['name'] = $this->retrieveNameOnly($item['member']);
+          $subAcc[$i]['department'] = app('App\Http\Controllers\DepartmentController')->retrieveDepartment($item['member']);
+        }
+      }
+      return $subAcc;
+    }
+    public function retrieveMembers (Request $request){
+      $data = $request->all();
+      $subAcc = SubAccount::where('account_id','=',$data['account_id'])->get();
+      if(sizeof($subAcc) > 0){
+        for($i=0; $i <= sizeof($subAcc) - 1; $i++){
+          $item = $subAcc[$i];
+          $subAcc[$i]['details'] = json_decode($item['details']);
+          $subAcc[$i]['name'] = $this->retrieveNameOnly($item['member']);
+          $subAcc[$i]['department'] = app('App\Http\Controllers\DepartmentController')->retrieveDepartment($item['member']);
+        }
+      }
+      return $subAcc;
+    }
 }
